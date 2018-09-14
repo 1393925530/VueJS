@@ -9,8 +9,9 @@
 </head>
 
 <body>
+V-model绑定了来自父级的动态数据，使用v-bind动态绑定props的值start，父组件的数据变化时，也会传递给子组件
     <div id="app">
-        <input type="text" v-model="parentMessage"> V-model绑定了
+        <input type="text" v-model="parentMessage">
         <my-component :message="parentMessage"></my-component>
     </div>
     <script src="vue.min.js"></script>
@@ -26,6 +27,7 @@
             }
         })
     </script>
+end
 </body>
 
 </html>
