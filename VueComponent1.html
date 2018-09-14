@@ -9,16 +9,16 @@
 </head>
 
 <body>
-V-model绑定了来自父级的动态数据，使用v-bind动态绑定props的值start，父组件的数据变化时，也会传递给子组件
+<!--V-model绑定了来自父级的动态数据，使用v-bind动态绑定props的值start，父组件的数据变化时，也会传递给子组件
     <div id="app">
         <input type="text" v-model="parentMessage">
-        <my-component :message="parentMessage"></my-component>
+        <my-component :message="parentMessage"></my-component> 父组件
     </div>
     <script src="vue.min.js"></script>
     <script>
         Vue.component("my-component",{
-            props: ['message'],
-            template: '<div>{{ message }}</div>'
+            props: ['message'], /*props声明需要从父级接收的数据*/
+            template: '<div>{{ message }}</div>' 子组件
         });
         var app = new Vue({
             el: '#app',
@@ -27,7 +27,24 @@ V-model绑定了来自父级的动态数据，使用v-bind动态绑定props的�
             }
         })
     </script>
-end
+end-->
+<div id="app">
+    <my-component message="[1,2,3]"></my-component> <!--message为字符串 ，来自父组件的数据为"[1,2,3]" 没有使用v-bind的是将标签里的数值当做字符串来使用-->
+    <my-component :message="[1,2,3]"></my-component> <!--message为数组-->
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component("my-component",{
+        props: ['message'],
+        template: '<div>{{ message.length }}</div>'
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            parentMessage: ''
+        }
+    })
+</script>
 </body>
 
 </html>
