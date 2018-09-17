@@ -9,11 +9,11 @@
 </head>
 
 <body>
+<!--父组件传递初始值，子组件保存初始值，在自己的作用域修改，在组件data内声明数据，引用父组件的prop start
 <div id="app">
     <my-component :init-count="1"></my-component>
 </div>
 <script src="vue.min.js"></script>
-父组件传递初始值，子组件保存初始值，在自己的作用域修改，在组件data内声明数据，引用父组件的prop start
 <script>
     Vue.component("my-component",{
         props: ['initCount'], /*HTML元素不区分大小写，所以父组件需要使用短横命名，初始化获取来自父组件的initCount*/
@@ -21,6 +21,28 @@
         data: function() {
             return {
                 count: this.initCount
+            }
+        }
+    });
+    var app = new Vue({
+        el: '#app',
+    })
+</script>
+end-->
+prop作为需要被转变的原始值传入，使用computed计算属性start
+<div id="app">
+    <my-component :width="100"></my-component>
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component("my-component",{
+        props: ['width'], /*HTML元素不区分大小写，所以父组件需要使用短横命名，初始化获取来自父组件的initCount*/
+        template: '<div :style="style">组件内容</div>',
+        computed: { /*prop作为需要被转变的原始值传入，使用computed计算属性*/
+            style: function() {
+                return {
+                    width: this.width  + 'px'
+                }
             }
         }
     });
