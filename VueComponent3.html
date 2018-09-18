@@ -8,7 +8,7 @@
     </title>
 </head>
 <body>
-组件通信 自定义事件start
+<!--组件通信 自定义事件start
 <div id="app">
     <p>总数： {{ total }}</p>
     <my-component @increase="handleGetTotal"
@@ -33,7 +33,7 @@
                 this.$emit('increase',this.counter);//第一个参数是自定义事件名称，后面的参数是传递的数据，可以不填或填写多个
             },
             handleReduce: function() {
-                this.counter--;
+                this.counter&#45;&#45;;
                 this.$emit('reduce',this.counter);
             }
         }
@@ -50,7 +50,34 @@
         }
     })
 </script>
-end
+end-->
+<div id="app">
+    <p>总数： {{ total }}</p>
+    <my-component v-model="total"></my-component> <!--直接用v-model绑定的一个数据total-->
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component("my-component",{
+        template: '<button @click="handleClick">+1</button>',
+        data: function() { //改变组件data"counter"后，通过$emit()再把他传递给父组件，父组件用v-on:increase和v-on:reduce。
+            return {
+                counter: 0
+            }
+        },
+        methods: {
+            handleClick: function() {
+                this.counter++;
+                this.$emit('input',this.counter);//第一个参数是自定义事件名称，后面的参数是传递的数据，可以不填或填写多个
+            },
+        }
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            total: 0
+        },
+    })
+</script>
 </body>
 
 </html>
