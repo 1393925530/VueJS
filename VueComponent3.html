@@ -51,9 +51,10 @@
     })
 </script>
 end-->
+<!--在自定义组件使用v-model指令start
 <div id="app">
     <p>总数： {{ total }}</p>
-    <my-component v-model="total"></my-component> <!--直接用v-model绑定的一个数据total-->
+    <my-component v-model="total"></my-component> &lt;!&ndash;直接用v-model绑定的一个数据total&ndash;&gt;
 </div>
 <script src="vue.min.js"></script>
 <script>
@@ -76,6 +77,35 @@ end-->
         data: {
             total: 0
         },
+    })
+</script>
+end-->
+<div id="app">
+    <p>总数： {{ total }}</p>
+    <my-component v-model="total"></my-component>
+    <button @click="handleReduce">-1</button>
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component("my-component",{
+        props: ['value'], //接收一个value属性
+        template: '<input :value="value" @input="updateValue">',//有新的value时触发input事件 ，满足上述两点才会实现具有双向绑定的v-model组件
+        methods: {
+            updateValue: function(event) {
+                this.$emit('input',event.target.value);
+            },
+        }
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            total: 0
+        },
+        methods: {
+            handleReduce: function() {
+                this.total--;
+            }
+        }
     })
 </script>
 </body>
