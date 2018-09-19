@@ -138,6 +138,32 @@ end-->
     })
 </script>
 end
+<!--<div id="app">
+    <button @click="handleRef">通过ref获取子组件的实例</button>
+    <p ref="p">内容</p>
+    <child-component ref="child"></child-component>
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component("child-component",{ //全局定义组件component-a
+        template: '<div>子组件</div>',//
+        data: function() {
+            return {
+                message: ''
+            }
+        }
+    });
+    var app = new Vue({ //创建Vue实例
+        el: '#app',
+        methods: {
+            handleRef: function() {
+                //通过$refs来访问指定的实例
+                var msg = this.$refs.child;
+                console.log(msg);
+            }
+        }
+    })
+</script>-->
 </body>
 
 </html>
