@@ -111,27 +111,30 @@ end-->
     })
 </script>
 end-->
-通过父链实现组件间通信 start
+通过子组件实现组件间通信 start
 <div id="app">
-    {{ message }}
-    <component-a></component-a> <!--父组件-->
+    <button @click="handleRef">通过ref获取子组件的实例</button>
+    <component-a ref="comA"></component-a> <!--在父组件模板中，子组件标签上使用ref指定一个名称，并在父组件通过this.$refs来访问指定名称的子组件-->
 </div>
 <script src="vue.min.js"></script>
 <script>
     Vue.component("component-a",{ //全局定义组件component-a
-        template: '<button @click="handleEvent">通过父链直接修改数据</button>',//
-        methods: {
-            handleEvent: function() {
-                //访问到父链后，可以做任何操作，比如说直接修改数据
-                this.$parent.message = '来自组件component-a的内容'; //访问组件的父实例或组件
-            },
+        template: '<div>子组件</div>',//
+        data: function() {
+            return {
+                message: '子组件内容'
+            }
         }
     });
     var app = new Vue({ //创建Vue实例
         el: '#app',
-        data: {
-            message: ''
-        },
+        methods: {
+            handleRef: function() {
+                //通过$refs来访问指定的实例
+                var msg = this.$refs.comA.message;
+                console.log(msg);
+            }
+        }
     })
 </script>
 end
