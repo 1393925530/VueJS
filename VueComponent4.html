@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        VueComponent4
+    </title>
+</head>
+
+<body>
+父组件模板的内容是在父组件作用域内编译 start
+<div id="app">
+    <child-component v-show="showChild"></child-component>
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component('child-component', {
+        template: '<div>子组件</div>'
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            showChild: true //showChild绑定的是父组件的数据
+        }
+    })
+</script>
+end
+</body>
+
+</html>
