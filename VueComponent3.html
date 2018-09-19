@@ -80,32 +80,33 @@ end-->
     })
 </script>
 end-->
-在自定义组件使用v-model指令start
+空Vue实例作为中央事件总线 start
 <div id="app">
-    <p>总数： {{ total }}</p>
-    <my-component v-model="total"></my-component>
-    <button @click="handleReduce">-1</button>
+    {{ message }}
+    <component-a></component-a>
 </div>
 <script src="vue.min.js"></script>
 <script>
-    Vue.component("my-component",{
-        props: ['value'], //接收一个value属性
-        template: '<input :value="value" @input="updateValue">',//有新的value时触发input事件 ，满足上述两点才会实现具有双向绑定的v-model组件
+    var bus = new Vue(); //创建名为bus的空vue实例
+    Vue.component("component-a",{ //全局定义组件component-a
+        template: '<button @click="handleEvent">传递事件</button>',//
         methods: {
-            updateValue: function(event) {
-                this.$emit('input',event.target.value);
+            handleEvent: function() { //点击按钮会通过bus把事件on-message发出去，app接收到来自bus的事件
+                bus.$emit('on-message','来自组件component-a的内容');
             },
         }
     });
-    var app = new Vue({
+    var app = new Vue({ //创建Vue实例
         el: '#app',
         data: {
-            total: 0
+            message: ''
         },
-        methods: {
-            handleReduce: function() {
-                this.total--;
-            }
+        mounted: function() { //在生命周期mounted钩子函数监听来自bus的事件on-message
+            var _this = this;
+            //在实例初始化时，监听来自bus实例的事件
+            bus.$on('on-message',function(msg) {
+                _this.message = msg;
+            })
         }
     })
 </script>
