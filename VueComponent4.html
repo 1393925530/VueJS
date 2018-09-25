@@ -26,7 +26,7 @@
     })
 </script>
 end-->
-slot分发的内容，作用域是在父组件上的 start
+<!--slot分发的内容，作用域是在父组件上的 start
 <div id="app">
     <child-component></child-component>
 </div>
@@ -44,7 +44,45 @@ slot分发的内容，作用域是在父组件上的 start
         el: '#app',
     })
 </script>
-end
+end-->
+<div id="app">
+    <my-list :books="books">
+        <!--作用域插槽也可以是具名的Slot-->
+        <template slot="book" scope="props">
+            <li>{{ props.bookName }}</li>
+        </template>
+    </my-list>
+</div>
+<script src="vue.min.js"></script>
+<script>
+    Vue.component('my-list', {
+        props: {
+            books: {
+                type: Array,
+                default: function() {
+                    return [];
+                }
+            }
+        },
+        template: '\
+        <ul>\
+        <slot name="book"\
+        v-for="book in books"\
+        :book-name="book.name">\
+            </slot>\
+            </ul>',
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            books: [
+                {name: '《Vue.JS实战》'},
+                {name: '《JavaScript语言精粹》'},
+                {name: '《JavaScript高级程序设计》'}
+            ]
+        }
+    })
+</script>
 </body>
 
 </html>
